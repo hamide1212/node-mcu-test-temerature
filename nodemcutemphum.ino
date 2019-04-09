@@ -6,7 +6,7 @@
 #define USERNAME "Hamide"
 #define DEVICE_ID "ham"
 #define DEVICE_CREDENTIAL "&KU1dcuwi&wq"
-//::::::::::::::::::::::SHT10:::::::::::::::::::::::://
+//::::::::::::::::::::::DHT22:::::::::::::::::::::::://
 #define DHTPIN 13
 #define DHTTYPE DHT22
 DHT dht(DHTPIN, DHTTYPE);
@@ -45,5 +45,5 @@ void setup() {
 
 void loop() {
   thing.handle();
-  Serial.print(dht.readTemperature());
+  
 }
