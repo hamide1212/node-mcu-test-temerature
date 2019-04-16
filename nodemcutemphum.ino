@@ -2,7 +2,6 @@
 #include <SimpleDHT.h>
 #include <SPI.h>
 #include <DHT.h>
-
 #define USERNAME "Hamide"
 #define DEVICE_ID "hamid"
 #define DEVICE_CREDENTIAL "2znv8XI%c%5Z"
@@ -14,6 +13,7 @@ DHT dht(DHTPIN, DHTTYPE);
 
 #define SSID "PC-Faster-3196"
 #define SSID_PASSWORD "1234567890"
+unsigned long lastCheck = 0;
 
 ThingerESP8266 thing(USERNAME, DEVICE_ID, DEVICE_CREDENTIAL);
 
@@ -37,25 +37,17 @@ void setup() {
     out["humidity"] = dht.readHumidity();
     out["celsius"] = dht.readTemperature();
    };
-   
-
-
 } 
+
 void loop() {
   thing.handle();
-  unsigned long lastCheck = 0;
   delay(1000);
   unsigned long currentTS = millis();
-  Serial.print(currentTS);
-  if(currentTS-lastCheck>=60000){
+  Serial.println(currentTS);
+  if(currentTS-lastCheck>=900000){//test temp every fifteen minutes
     lastCheck=currentTS;
     if(dht.readTemperature()>30){
-
        thing.call_endpoint("id1",thing["celsius"]);
-       delay(3000);
-    }
-    
-
-  
+    } 
 }
 }
