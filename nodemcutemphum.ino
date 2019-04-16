@@ -4,8 +4,8 @@
 #include <DHT.h>
 
 #define USERNAME "Hamide"
-#define DEVICE_ID "ham"
-#define DEVICE_CREDENTIAL "&KU1dcuwi&wq"
+#define DEVICE_ID "hamid"
+#define DEVICE_CREDENTIAL "2znv8XI%c%5Z"
 //::::::::::::::::::::::DHT22:::::::::::::::::::::::://
 #define DHTPIN 13
 #define DHTTYPE DHT22
@@ -37,13 +37,25 @@ void setup() {
     out["humidity"] = dht.readHumidity();
     out["celsius"] = dht.readTemperature();
    };
-  
+   
 
 
-
-}
-
+} 
 void loop() {
   thing.handle();
+  unsigned long lastCheck = 0;
+  delay(1000);
+  unsigned long currentTS = millis();
+  Serial.print(currentTS);
+  if(currentTS-lastCheck>=60000){
+    lastCheck=currentTS;
+    if(dht.readTemperature()>30){
+
+       thing.call_endpoint("id1",thing["celsius"]);
+       delay(3000);
+    }
+    
+
   
+}
 }
